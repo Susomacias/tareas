@@ -1,0 +1,102 @@
+<div *ngIf="!user">
+  <nav class="navbar navbar-expand-lg  fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand"  [routerLink]="['']">Hacerpresupuesto.com</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <button type="button" (click)="coverDisable()" class="nav-item active btn btn-outline-dark btn-sm pl-1 pr-1 mr-2"
+            [routerLink]="['/login']">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+              class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+              <path fill-rule="evenodd"
+                d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+            </svg>
+            Identificate</button>
+        </li>
+        <li class="nav-item">
+          <button type="button" (click)="coverDisable()" class="nav-item active btn btn-outline-light btn-sm"
+            [routerLink]="['/registro']">Registrate</button>
+        </li>
+      </ul>
+
+    </div>
+
+  </nav>
+</div>
+
+<div *ngIf="user" class="fixed-top ">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" [routerLink]="['']">Hacerpresupuesto.com</a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+
+        <li class="nav-item active m-1">
+          <a class="navbar-brand" [routerLink]="['']"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+              fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+              <path
+                d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
+            </svg></a>
+        </li>
+
+      </ul>
+      
+
+      <ul class="navbar-nav ml-auto mr-3">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <img src="{{avatar}}" width="30" height="30" class="avatar_nav mr-1" /> {{user.name}}
+          </a>
+          <div class="dropdown-menu mr-5" aria-labelledby="navbarDropdown">
+            <div >
+              <a class="dropdown-item" [routerLink]="['/ajustes']">Ajustes de usuario</a>
+            </div>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" [routerLink]="['/logout/1']">Salir</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+
+<div class="mt-5 pt-2">
+  <router-outlet></router-outlet>
+</div>
+
+
+
+<div *ngIf="user">
+  <footer class="container-fluid mt-5">
+    <div class="row p-3 bg-dark text-white">
+      <div class="mx-auto text-center">
+        <a class="text-white  m-2" [routerLink]="['politica-de-privacidad']">Politica de privacidad</a>
+        <button type="button" class="btn btn-outline-light btn-rounded m-2" [routerLink]="['contacto']">
+          Contactar con el equipo de desarrollo
+        </button>
+      </div>
+    </div>
+    <div class="row p-3 mb-2 bg-secondary text-white">
+      <div class="mx-auto text-center">
+        <a class="text-white" [routerLink]="['/home']">Hacerpresupuesto.com</a>
+      </div>
+    </div>
+  </footer>
+</div>

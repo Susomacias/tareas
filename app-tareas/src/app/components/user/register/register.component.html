@@ -1,0 +1,63 @@
+<div class="d-flex justify-content-center">
+    <h1 class="mt-5">{{page_title}}</h1>
+</div>
+
+<div class="d-flex justify-content-center">
+    <div class="card mt-2 mr-2 ml-2 p-5 text-center" style="width: 32rem;">
+
+        <div class="alert alert-danger" *ngIf="status=='error'">
+            FALLO EN EL REGISTRO:
+            Debido a un problema de conexión o que ya hay un usuario registrado con este email.
+        </div>
+
+        <!--Formulario de registro-->
+        <form id="registerform" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+            <div class="form-group">
+                <label for="name">Nombre</label>
+                <input type="text" name="name" class="form-control" #name="ngModel" [(ngModel)]="
+            user.name" required pattern="[a-zA-Z]+">
+                <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+                    El nombre no es válido
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]="
+            user.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
+                    El correo no es válido
+                </small>
+            </div>
+            <div class="form-group">
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" class="form-control" #password="ngModel"
+                    [(ngModel)]="user.password" required pattern="^(?=.*\d)(?=.*[a-zA-Z]).{6,15}$">
+                <small *ngIf="!password.valid && password.touched" class="invalid-feedback d-block">
+                    La contraseña debe tener entre 6 y 15 caracteres, con al menos una letra y un número. <i> Ejemplo:
+                        Lorem1448</i>
+                </small>
+            </div>
+            <div>
+                <input type="submit" value="{{(loading) ? 'Agregando Usuario...' : 'Registrarme'}}"
+                    [disabled]="registerForm.invalid" value="Identificarse" class="btn btn-success"
+                    [disabled]="registerForm.invalid" />
+            </div>
+        </form>
+
+        <div>
+            <button class="btn btn-danger mt-3" (click)="signInWithGoogle()" (click)="googlelogin()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-google" viewBox="0 0 16 16">
+                    <path
+                        d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                </svg>
+                Iniciar con Google
+            </button>
+        </div>
+
+        <div>
+            <p> ¿Ya tienes cuenta? <a [routerLink]="['/login']">identificate aquí</a> </p>
+        </div>
+    </div>
+</div>

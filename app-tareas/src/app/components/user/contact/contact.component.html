@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="row justify-content-center" style="margin-top: 20px;">
+        <div>
+            <h1>{{page_title}}</h1>
+            <p *ngIf="status != 'success'">
+                Envianos cualquier consulta, sugerencia, propuesta o duda.
+            </p>
+
+            <div class="alert alert-success" *ngIf="status == 'success'">
+                El mensaje ha sido enviado correctamente.
+            </div>
+
+            <div class="alert alert-danger" *ngIf="status=='error'">
+                El mensaje no se ha enviado.
+            </div>
+
+            <!--Formulario de contacto-->
+            <form #contactForm="ngForm" (ngSubmit)="onSubmit(contactForm)">
+                <div class="form-group">
+                    <label for="name">Nombre</label>
+                    <input type="text" name="name" class="form-control" #name="ngModel" [(ngModel)]="
+            contact.name" required pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{2,64}">
+                    <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+                        El nombre no es válido
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]="
+            contact.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+                    <small *ngIf="!email.valid && email.touched" class="invalid-feedback d-block">
+                        El correo no es válido
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Mensaje</label>
+                    <input type="text" name="subject" class="form-control" #subject="ngModel" [(ngModel)]="
+            contact.subject" required>
+                    <small *ngIf="!subject.valid && subject.touched" class="invalid-feedback d-block">
+                        El menaje está vacío
+                    </small>
+                </div>
+
+                <input type="submit" value="Enviar" class="btn btn-success" [disabled]="contactForm.invalid" />
+            </form>
+        </div>
+    </div>
+</div>

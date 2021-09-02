@@ -1,0 +1,24 @@
+
+
+.navbar-text{
+    font-size: 150%;
+    font-weight: 700 !important;
+    color: #ffda00;
+    line-height: 100%;
+    text-align: center !important;
+};
+
+#cover {
+	width: 100%;
+	height: 200vh;
+	background:radial-gradient(#1447C8, black);
+
+	display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+
+
