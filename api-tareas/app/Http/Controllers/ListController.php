@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\Department;
-use App\Models\Category;
-use App\Models\Article;
+use App\Models\ListModel;
+use App\Models\TaskModel;
 use App\Helpers\jwtAuth;
-use DB;
 use Illuminate\Support\Facades\Auth;
 
 
-class DepartmentController extends Controller{
+class ListController extends Controller{
 
     private function getIdentity($request) {
         $jwtAuth = new JwtAuth();
@@ -48,19 +46,18 @@ class DepartmentController extends Controller{
             $data = [
               'code' => 400,
                'status' => 'error',
-               'message' => 'No se ha creado el departamento, faltan datos'
+               'message' => 'No se ha creado el listado, faltan datos'
             ];
         } else {
-            $department = new Department();
-            $department->user_id = $user->sub;
-            $department->name = $params->name;
-            $department->description = $params->description;
-            $department->save();
+            $listing = new ListModel();
+            $listing->user_id = $user->sub;
+            $listing->name = $params->name;
+            $listing->save();
 
             $data = array(
                 'code' => 200,
                 'status' => 'success',
-                'department' => $department
+                'listing' => $listing
             );
         }
         } else {
@@ -73,7 +70,7 @@ class DepartmentController extends Controller{
         return response()->json($data, $data['code']);
     }
 
-    public function getDepartmentByUser(Request $request){
+    public function reader(Request $request){
         $token = $request->header('Authorization');
         $jwtAuth = new \JwtAuth();
         $checToken = $jwtAuth->checkToken($token);
@@ -82,23 +79,22 @@ class DepartmentController extends Controller{
         $json = $request->input('json', null);
         $params = json_decode($json);
         $params_array = json_decode($json, true);
+        $id = $params_array['id'];
 
-
-        if ($checToken && !empty($params_array)) {
-            
-            $id = $params_array['id'];
-            $departments = Department::where('user_id', $id)->orderBy('name')->get();
-            $hash = md5(serialize($departments));
+        if ($checToken && !empty($id)) {
+                        
+            $listings = ListModel::where('user_id', $id)->orderBy('created_at')->get();
+            $hash = md5(serialize($listings));
 
             return response()->json(array(
                 'status'    => 'success',
-                'list'      => $departments,
+                'list'      => $listings,
                 'hash'      => $hash,
             ), 200);  
         }
      }
 
-     public function updateDepartment(Request $request){
+     public function update(Request $request){
         $token = $request->header('Authorization');
         $jwtAuth = new \JwtAuth();
         $checToken = $jwtAuth->checkToken($token);
@@ -112,22 +108,20 @@ class DepartmentController extends Controller{
 
         $update_data = array(
             'name'=>$params_array['name'],
-            'description'=>$params_array['description'],
-            'favorite'=>$params_array['favorite']
         );
     
         if ($checToken && !empty($update_data)) {
         
-            $department = Department::where('id', $id)
+            $listing = ListModel::where('id', $id)
                         ->update($update_data);
         
-            $departments = Department::where('user_id', $userId)->orderBy('name')->get();
-            $hash = md5(serialize($departments));
+            $listings = ListModel::where('user_id', $userId)->orderBy('created_at')->get();
+            $hash = md5(serialize($listings));
 
             $data = array(
                 'code' => 200,
                 'status'    => 'success',
-                'list'      => $departments,
+                'list'      => $listings,
                 'hash'      => $hash
             );  
             
@@ -142,7 +136,7 @@ class DepartmentController extends Controller{
         return response()->json($data, $data['code']);
      }
 
-    public function deleteDepartment(Request $request) {
+    public function delete(Request $request) {
 
         $token = $request->header('Authorization');
         $jwtAuth = new \JwtAuth();
@@ -158,29 +152,26 @@ class DepartmentController extends Controller{
 
             $user = $this->getIdentity($request);
         
-            $department = Department::where('id', $id)
+            $listing = ListModel::where('id', $id)
                         ->where('user_id', $user->sub)
                         ->first();
 
-         $update_data = array('department_id'=>null,);
+         $update_data = array('list_id'=>null,);   
 
-         $departmentinarticles = Article::where('department_id', $id)
-                                 ->update($update_data);   
-
-         $departmentincategories = Category::where('department_id', $id)
+         $departmentincategories = TaskModel::where('list_id', $id)
                                    ->update($update_data);
 
         
-            if (!empty($department)) {
-                $department->delete();
+            if (!empty($listing)) {
+                $listing->delete();
 
-            $departments = Department::where('user_id', $userId)->orderBy('name')->get();
-            $hash = md5(serialize($departments));
+            $listings = ListModel::where('user_id', $userId)->orderBy('created_at')->get();
+            $hash = md5(serialize($listings));
         
                 $data = [
                     'code' => 200,
                     'status'    => 'success',
-                    'list'      => $departments,
+                    'list'      => $listings,
                     'hash'      => $hash
                 ];
 
@@ -201,25 +192,4 @@ class DepartmentController extends Controller{
         }
             return response()->json($data, $data['code']);
      }
-
-     public function detail($id){
-        $department = Department::find($id);
-
-        if (is_object($department)) {
-            $data = array(
-                'code' => 200,
-                'status' => 'success',
-                'department' => $department,
-            );
-        } else {
-            $data = array(
-                'code' => 404,
-                'status' => 'error',
-                'message' => 'El departamento no existe.'
-            );
-        }
-
-        return response()->json($data, $data['code']);
-    }
-
 }

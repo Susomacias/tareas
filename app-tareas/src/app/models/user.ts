@@ -5,12 +5,7 @@ export class User{
         public email: string,
         public password: string,
         public image: string,
+        public tasks_list: string,
         public newpassword: string,
-        public address:string,
-        public phone:string,
-        public web:string,
-        public taxes:number,
-        public measure:string,
-        public coin:string,
     ){}
 }

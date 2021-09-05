@@ -38,7 +38,7 @@ export class UserEditComponent implements OnInit {
   ) {
     this.page_title = 'Datos de usuario';
     this.token      = this._userService.getToken();
-    this.user=new User(1, '','','','','','','','',1,'','');
+    this.user=new User(1, '','','','','','');
 
      //RELLENAR CAMPOS DE USUARIO CON DATOS DE USUARIO REGISTRADO
      this.identity = this._userService.getIdentity();
@@ -50,13 +50,8 @@ export class UserEditComponent implements OnInit {
        this.identity.name,
        this.identity.email, '',
        this.identity.image,
+       this.identity.task_list,
        this.identity.newpassword,
-       this.identity.address,
-       this.identity.phone,
-       this.identity.web,
-       this.identity.taxes,
-       this.identity.measure,
-       this.identity.coin,
      );
    }
 
@@ -134,24 +129,6 @@ export class UserEditComponent implements OnInit {
             }
             if(response.change.email){
               this.user.email = response.change.email;
-            }
-            if(response.change.address){
-              this.user.address = response.change.address;
-            }
-            if(response.change.phone){
-              this.user.phone = response.change.phone;
-            }
-            if(response.change.web){
-              this.user.web = response.change.web;
-            }
-            if(response.change.taxes){
-              this.user.taxes = response.change.taxes;
-            }
-            if(response.change.measure){
-              this.user.measure = response.change.measure;
-            }
-            if(response.change.coin){
-              this.user.coin = response.change.coin;
             }
             this.identity = this.user;
             localStorage.setItem('identity', JSON.stringify(this.identity));

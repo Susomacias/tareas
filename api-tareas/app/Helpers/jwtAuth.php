@@ -28,12 +28,7 @@ class JwtAuth {
             'name'=> $user->name,
             'email'=> $user->email,
             'image'=> $user->image,
-            'address'=> $user->address,
-            'phone'=> $user->phone,
-            'web'=> $user->web,
-            'taxes'=> $user->taxes,
-            'measure'=> $user->measure,
-            'coin'=> $user->coin,
+            'tasks_list'=> $user->tasks_list,
 
         );
     //DEVOLVER LOS DATOS DECODIFICADOS O EL TOKEN EN FUNCIÓN DE UN PARAMETRO
@@ -90,12 +85,7 @@ class JwtAuth {
                 'name'=> $user->name,
                 'email'=> $user->email,
                 'image'=> $user->image,
-                'address'=> $user->address,
-                'phone'=> $user->phone,
-                'web'=> $user->web,
-                'taxes'=> $user->taxes,
-                'measure'=> $user->measure,
-                'coin'=> $user->coin,
+                'tasks_list'=> $user->tasks_list,
             );
 
 

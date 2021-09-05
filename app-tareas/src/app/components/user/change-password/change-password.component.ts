@@ -29,7 +29,7 @@ export class ChangePasswordComponent implements OnInit {
   ) {
     this.page_title = 'Contraseña';
     this.token = this._userService.getToken();
-    this.user = new User(1, '','','','','','','','',1,'','');
+    this.user = new User(1, '','','','','','');
     this.password = new Password('');
 
     this.identity = this._userService.getIdentity();

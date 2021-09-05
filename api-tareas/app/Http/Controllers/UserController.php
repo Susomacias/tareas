@@ -240,27 +240,14 @@ class UserController extends Controller
                 }
                 $user['name']   = $params_array['name'];
                 $user['email']  = $params_array['email'];
-                $user['address']  = $params_array['address'];
-                $user['phone']  = $params_array['phone'];
-                $user['web']  = $params_array['web'];
-                $user['taxes']  = $params_array['taxes'];
-                $user['measure']  = $params_array['measure'];
-                $user['coin']  = $params_array['coin'];
                 //QUITAR LOS CAMPOS QUE NO QUIERO ACTUALIZAR
                 unset($params_array['id']);
                 unset($params_array['password']);
                 unset($params_array['create_at']);
-                unset($params_array['remember_token']);
             } else {
                 $row = User::find($token->sub);
                 $user['name']   = $row['name'];
                 $user['email']  = $row['email'];
-                $user['address']  = $row['address'];
-                $user['phone']  = $row['phone'];
-                $user['web']  = $row['web'];
-                $user['taxes']  = $row['taxes'];
-                $user['measure']  = $row['measure'];
-                $user['coin']  = $row['coin'];
                 $user['image']  = "http://localhost/users/" . $row['email'];
                 $params_array   = [];
             }
@@ -368,12 +355,6 @@ class UserController extends Controller
                 unset($params_array['email']);
                 unset($params_array['image']);
                 unset($params_array['create_at']);
-                unset($params_array['address']);
-                unset($params_array['phone']);
-                unset($params_array['web']);
-                unset($params_array['taxes']);
-                unset($params_array['measure']);
-                unset($params_array['coin']);
 
                 //ACTUALIZAR USUARIO EN BBD
                 $user_update = User::where('email', $email)->update(['password' => $newpasswordcode]);

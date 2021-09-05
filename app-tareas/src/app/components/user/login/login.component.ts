@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
 
   ) {
     this.page_title = 'Identificate';
-    this.user = new User(1, '','','','','','','','',1,'','');
+    this.user = new User(1, '','','','','','');
     this.google_user = new SocialUser;
     this.siteKey = '6Le-tuAaAAAAAGulKbnRuf1WJr2oFc30bbsjXvhv';
 

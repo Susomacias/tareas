@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Element extends Model
+class TaskModel extends Model
 {
-    protected $table = 'elements';
+    protected $table = 'tasks';
     
     protected $fillable = [
         'name','description'
@@ -16,5 +16,10 @@ class Element extends Model
     public function user(){
         return $this->belongsTo('App\Models\User', 'user_id');
     }   
+
+    public function department(){
+        return $this->belongsTo('App\Models\ListModel', 'list_id');
+    } 
+    
     
 }

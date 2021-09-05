@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
     private authService: SocialAuthService,
   ) {
     this.page_title = 'Registrate'
-    this.user=new User(1, '','','','','','','','',1,'','');
+    this.user=new User(1, '','','','','','');
     this.siteKey = '6Le-tuAaAAAAAGulKbnRuf1WJr2oFc30bbsjXvhv';
    }
 

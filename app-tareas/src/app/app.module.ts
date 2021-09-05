@@ -24,6 +24,7 @@ import { IdentityGuard} from './services/identity.guard';
 import { ErrorComponent } from './components/user/error/error.component';
 import { ChangePasswordComponent } from './components/user/change-password/change-password.component';
 import { PasswordRecoveriComponent } from './components/user/password-recoveri/password-recoveri.component';
+
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
@@ -31,9 +32,12 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
-import * as pdfFonts from "pdfmake/build/vfs_fonts"; // fonts provided for pdfmake
+import * as pdfFonts from "pdfmake/build/vfs_fonts";// fonts provided for pdfmake
+
 
 PdfMakeWrapper.setFonts(pdfFonts);
 
@@ -67,7 +71,9 @@ PdfMakeWrapper.setFonts(pdfFonts);
     MatFormFieldModule,
     MatInputModule,
     MatExpansionModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatProgressBarModule,
+    DragDropModule
 
   ],
   providers: [

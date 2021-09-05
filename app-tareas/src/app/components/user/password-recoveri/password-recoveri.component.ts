@@ -20,7 +20,7 @@ export class PasswordRecoveriComponent implements OnInit {
     private _route: ActivatedRoute,
   ) { 
     this.page_title = 'Recuperar contraseña';
-    this.user = new User(1, '','','','','','','','',1,'','');
+    this.user = new User(1, '','','','','','');
   }
 
   ngOnInit(): void {

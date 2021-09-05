@@ -5,55 +5,50 @@ import { User } from './models/user';
 import { global } from './services/global.service';
 import { from } from 'rxjs';
 import { RouterModule } from '@angular/router';
+import { List } from './models/list';
+import { ListService } from './services/list.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [UserService]
+  providers: [UserService, ListService]
 })
 export class AppComponent implements OnInit, DoCheck {
-  public title = 'blog-angular';
   public identity;
   public token;
   public url;
-  public budguet;
-  public row;
-  public rows;
-  public categories;
   public user: User;
   public avatar: string;
   public origin: string;
   public id;
-  public budguetName;
-  public budguetId;
-  public rowQuantity;
   public status: string;
   public loading: boolean;
-  public rows_budguet;
   public userComplete:boolean;
+  public list:List;
+  public lists;
 
   constructor(
     private _userService: UserService,
+    private _listService: ListService,
     private _router: Router,
     private _route: ActivatedRoute,
   ) {
     this.url = global.url;
+    this.list = new List(null,null,null);
     this.origin = this._userService.getOriginLogin();
+    this.token      = this._userService.getToken();
     
   }
 
   ngOnInit() {
     this.loadUser();
-    this.budguet = JSON.parse(localStorage.getItem('budguet-detail'));
   }
 
   ngDoCheck() {
     this.loadUser();
     this.origin = this._userService.getOriginLogin();
     if (this.origin == '{"userlogin"}') { this.origin = 'userlogin' };
-
-    this.rows_budguet = localStorage.getItem('row-' + this.budguetId + '-list');
   }
 
   loadUser() {
@@ -66,6 +61,26 @@ export class AppComponent implements OnInit, DoCheck {
 
   coverDisable(){
     localStorage.removeItem('cover');
+  }
+
+  createList(form){
+    this.loading=true;
+    console.log(this.token, this.list, this.list.name);
+    this._listService.create(this.token, this.list).subscribe(
+      response => {
+        if(response.status ='success'){
+          this.status= 'success';
+          form.reset();
+          this.loading=false;
+        }else{
+          this.status = 'error';
+        }
+      },
+      error => {
+        this.status = 'error';
+        console.log(<any>error);
+      }
+    )
   }
 
 }

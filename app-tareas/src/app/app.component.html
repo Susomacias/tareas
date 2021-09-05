@@ -33,57 +33,55 @@
   </nav>
 </div>
 
-<div *ngIf="user" class="fixed-top ">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" [routerLink]="['']">Hacerpresupuesto.com</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+<div *ngIf="user">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" [routerLink]="['']">Lista de Tareas</a>
+  
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  
+        
       <ul class="navbar-nav mr-auto">
-
         <li class="nav-item active m-1">
-          <a class="navbar-brand" [routerLink]="['']"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-              fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
-              <path
-                d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
-            </svg></a>
+          <form class="form-inline" #newListForm="ngForm" (ngSubmit)="createList(newListForm)">
+              <input class="form-control mr-sm-2 col-8 mr-1"  #subject="ngModel" name="nombre" 
+              [(ngModel)]="list.name"
+              placeholder="mi nueva lista" aria-label="list" required >
+              <input class="btn btn-outline-light my-2 my-sm-0 col-3" type="submit"
+              value="{{(loading) ? 'creando...' : 'CREAR'}}"
+              [disabled]="newListForm.invalid">
+          </form>
         </li>
-
       </ul>
-      
-
-      <ul class="navbar-nav ml-auto mr-3">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <img src="{{avatar}}" width="30" height="30" class="avatar_nav mr-1" /> {{user.name}}
-          </a>
-          <div class="dropdown-menu mr-5" aria-labelledby="navbarDropdown">
-            <div >
-              <a class="dropdown-item" [routerLink]="['/ajustes']">Ajustes de usuario</a>
+        
+        <ul class="navbar-nav ml-auto mr-3">
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              <img src="{{avatar}}" width="30" height="30" class="avatar_nav mr-1" /> {{user.name}}
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <div >
+                <a class="dropdown-item" [routerLink]="['/ajustes']">Ajustes de usuario</a>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" [routerLink]="['/logout/1']">Salir</a>
             </div>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" [routerLink]="['/logout/1']">Salir</a>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
-</div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 
-
-
-<div class="mt-5 pt-2">
+<div class="mt-3">
   <router-outlet></router-outlet>
 </div>
 
-
-
-<div *ngIf="user">
   <footer class="container-fluid mt-5">
     <div class="row p-3 bg-dark text-white">
       <div class="mx-auto text-center">
@@ -95,8 +93,12 @@
     </div>
     <div class="row p-3 mb-2 bg-secondary text-white">
       <div class="mx-auto text-center">
-        <a class="text-white" [routerLink]="['/home']">Hacerpresupuesto.com</a>
+        <a class="text-white" [routerLink]="['/home']">listadetareas.com</a>
       </div>
     </div>
   </footer>
-</div>
+
+
+
+
+

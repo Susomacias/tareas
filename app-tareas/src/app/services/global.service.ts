@@ -1,2 +1,4 @@
 export var global = {
-    url: 'http://localhost/api/'}
+    url: 'http://localhost/api/'
+
+}
