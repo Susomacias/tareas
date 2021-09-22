@@ -34,6 +34,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {MatRadioModule} from '@angular/material/radio';
 
 import { PdfMakeWrapper } from 'pdfmake-wrapper';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";// fonts provided for pdfmake
@@ -73,6 +74,7 @@ PdfMakeWrapper.setFonts(pdfFonts);
     MatExpansionModule,
     BrowserAnimationsModule,
     MatProgressBarModule,
+    MatRadioModule,
     DragDropModule
 
   ],

@@ -1,237 +1,494 @@
 <div *ngIf="!user">
-    <div id="cover"></div>
-    <div id="contentCover">
-        <div class="presentation">
-            <h1 class="h1">PORTADA</h1>
-
+    <div class="container">
+        <div class="d-flex justify-content-center mt-5">
+            <div class="mt-5">
+                <img id="dragdropicon" src="../../assets/img/presentation/dragdropicon.svg">
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-2">
+            <h1 class="h1 mt-2">LISTA DE TAREAS</h1>
+        </div>
+        <div class="d-flex justify-content-center mt-3 mr-5 ml-5">
+            <p class="text-center">
+                Una sencilla aplicación para crear un listado de tareas,
+                podrás añadir listas, tareas dentro de las listas y ordenar las tareas
+                comodamente arrastrando y soltando en el lugar que deseas.
+            </p>
+        </div>
+        <div class="d-flex justify-content-center mt-4 mb-5">
+            <button type="button" class="btn btn-secondary btn-lg mb-5" [routerLink]="['registro']">Comienza ahora</button>
         </div>
     </div>
 </div>
 
 
+    <div *ngIf="user">
+        <div class="container">
+            <div *ngFor="let list of lists" class="mb-2">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header class="bg-secondary">
+                            <mat-panel-title class="text-white">
+                                {{list.name}}
+                            </mat-panel-title>
+                            <mat-icon class="mr-2 text-secondary ">
 
-<div *ngIf="user">
-    <div class="container">
-        <div *ngFor="let list of lists" class="mb-2">
-            <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header class="bg-secondary">
-                        <mat-panel-title class="text-white">
-                            {{list.name}}
-                        </mat-panel-title>
-                        <mat-icon class="mr-2 text-secondary ">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                    <path
+                                        d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                </svg>
+                            </mat-icon>
+                        </mat-expansion-panel-header>
 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-eye-fill" viewBox="0 0 16 16">
-                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
-                                <path
-                                    d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
-                            </svg>
-                        </mat-icon>
-                    </mat-expansion-panel-header>
-
-                    <mat-panel-description>
-                        <div class="container-xl mt-2">
-                            <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
-                                <div *ngFor="let task of tasks" cdkDrag>
-                                    <div>
-                                        <div *ngIf="task.list_id == list.id" class="example-box">
-                                            <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
-                                            <div class=" task container-fluid">
-                                               <div class="m-2">
-                                                   <h2> {{task.name}} </h2>
-                                                    {{task.description}}
-                                               </div>
-                                            </div>
-                                                
-                                            </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <div class="bd-highligh m-2">
-                                    <button name="DELETEList" class="btn btn-light text-secondary mr-2"
-                                        data-toggle="modal" [attr.data-target]="'#DelListModal'+list.id"
-                                        (click)="onLoading()">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                            fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
-                                            <path
-                                                d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
-                                        </svg>
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal" id="{{'DelListModal'+ list.id}}" tabindex="-1"
-                                        aria-labelledby="DelListModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h2 class="modal-title" id="DelListModalLabel">Eliminar Departamento
-                                                    </h2>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close" (click)="ofLoading()">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Estás a punto de eliminar permanentemente la lista:
-                                                    <b>{{list.name}} y todas sus tareas.</b>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        (click)="ofLoading()" data-dismiss="modal">
-                                                        No deseo eliminar
-                                                    </button>
-                                                    <form #deletelistForm="ngForm"
-                                                        (ngSubmit)="deleteList(deletelistForm)">
-                                                        <button class="btn btn-danger mt-3 form-group"
-                                                            data-dismiss="modal" data-backdrop="false" type="button"
-                                                            (click)="deleteList(list)">
-                                                            Eliminar
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div>
-                                        <small>Borrar Lista</small>
-                                    </div>
-                                </div>
-                                <div class="bd-highligh m-2">
-
-                                    <button name="EDITList" class="btn btn-light text-secondary mr-2"
-                                        data-toggle="modal" [attr.data-target]="'#EditListModal'+list.id"
-                                        (click)="onLoading()">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                            fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
-                                            <path
-                                                d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
-                                        </svg>
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="{{'EditListModal'+ list.id}}" tabindex="-1"
-                                        aria-labelledby="EditListModalListLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h2 class="modal-title" id="EditListModalLabel">Editar
-                                                        Departamento
-                                                    </h2>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close" (click)="ofLoading()">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    Puedes actualizar los datos del departamento:
-                                                    <b>{{list.name}}</b>
-
-                                                    <div class="d-flex flex-column bd-highlight mb-3 mt-2">
-                                                        <div>
-                                                            <!--Formulario-->
-                                                            <form #updatelistForm="ngForm"
-                                                                (ngSubmit)="updateList(updatelistForm)">
-
-                                                                <div class="form-group">
-                                                                    <label for="name">Nombre</label>
-                                                                    <input type="text" name="nombre"
-                                                                        class="form-control" #subject="ngModel"
-                                                                        value="{{list.name}}" [(ngModel)]="list.name"
-                                                                        required>
-                                                                    <small *ngIf="!subject.valid && subject.touched"
-                                                                        class="invalid-feedback d-block">
-                                                                        Es necesario poner un nombre valido
-                                                                    </small>
-                                                                </div>
-
-                                                                <div class="d-flex justify-content-end">
-                                                                    <button class="btn btn-secondary mt-2 mb-3 ml-2"
-                                                                        data-dismiss="modal"
-                                                                        (click)="ofLoading()">Cerrar</button>
-
-                                                                    <button class="btn btn-primary mt-2 ml-2 form-group"
-                                                                        data-dismiss="modal" data-backdrop="false"
-                                                                        type="submit" (click)="updateList(list)">
-                                                                        Actualizar
-                                                                    </button>
-                                                                </div>
-                                                            </form>
+                        <mat-panel-description>
+                            <div class="container-xl mt-2">
+                                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                                    <div *ngFor="let task of tasks" cdkDrag>
+                                        <div>
+                                            <div *ngIf="task.list_id == list.id" class="example-box">
+                                                <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                                                <div class=" task container-fluid">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="ml-1 mt-1 bd-highlight">
+                                                            <h2> {{task.name}} </h2>
                                                         </div>
+                                                        <div class="bd-highlight text-right">
+
+                                                            <button name="DELETETask" type="button"
+                                                                class="btn btn-light text-secondary ml-2"
+                                                                data-toggle="modal"
+                                                                [attr.data-target]="'#DelTaskModal'+task.id">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" fill="currentColor"
+                                                                    class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                                                </svg>
+                                                            </button>
+
+
+                                                            <div class="modal fade" id="{{'DelTaskModal'+ task.id}}"
+                                                                tabindex="-1" aria-labelledby="DeleteTaskModalLabel"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h2 class="modal-title"
+                                                                                id="DeleteTaskModalLabel">Eliminar Tarea
+                                                                                {{task.name}}
+                                                                            </h2>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            Estás a punto de eliminar permanentemente
+                                                                            esta
+                                                                            tarea
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button"
+                                                                                class="btn btn-secondary"
+                                                                                data-dismiss="modal">No deseo
+                                                                                Eliminar </button>
+                                                                            <form #deleteTaskForm="ngForm"
+                                                                                (ngSubmit)="deleteTask(deleteTaskForm)">
+                                                                                <button
+                                                                                    class="btn btn-danger mt-3 form-group"
+                                                                                    data-dismiss="modal"
+                                                                                    data-backdrop="false" type="button"
+                                                                                    (click)="deleteTask(task)">
+                                                                                    Eliminar
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <button name="EDITTask" type="button"
+                                                                class="btn btn-light text-secondary ml-2"
+                                                                data-toggle="modal"
+                                                                [attr.data-target]="'#EditTaskModal'+task.id">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" fill="currentColor"
+                                                                    class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
+                                                                </svg>
+                                                            </button>
+
+
+                                                            <div class="modal fade" id="{{'EditTaskModal'+ task.id}}"
+                                                                tabindex="-1" aria-labelledby="EditTaskModalLabel"
+                                                                aria-hidden="false">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h2 class="modal-title"
+                                                                                id="EditTaskModalLabel">
+                                                                                Editar Tarea</h2>
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div
+                                                                                class="d-flex flex-column bd-highlight mb-3 mt-2">
+                                                                                <div>
+                                                                                    <!--Formulario-->
+                                                                                    <form #createTaskForm="ngForm"
+                                                                                        (ngSubmit)="updateTask(updatetaskForm)">
+                                                                                        <div class="form-group">
+                                                                                            <label
+                                                                                                for="name">Nombre</label>
+                                                                                            <input type="text"
+                                                                                                name="nombre"
+                                                                                                class="form-control"
+                                                                                                #subject="ngModel"
+                                                                                                [(ngModel)]="task.name"
+                                                                                                required>
+                                                                                            <small
+                                                                                                *ngIf="!subject.valid && subject.touched"
+                                                                                                class="invalid-feedback d-block">
+                                                                                                Es necesario poner un
+                                                                                                nombre
+                                                                                                valido
+                                                                                            </small>
+                                                                                        </div>
+
+                                                                                        <div class="form-group">
+                                                                                            <label
+                                                                                                for="description">Descripción
+                                                                                                (opcional)</label>
+                                                                                            <textarea rows="5"
+                                                                                                name="descripcion"
+                                                                                                class="form-control"
+                                                                                                #subject="ngModel"
+                                                                                                [(ngModel)]="task.description">
+                                                                                        </textarea>
+                                                                                        </div>
+
+                                                                                        <div
+                                                                                            class="d-flex justify-content-end">
+                                                                                            <button
+                                                                                                class="btn btn-secondary mt-2 mb-3 ml-2"
+                                                                                                data-dismiss="modal">Cerrar</button>
+
+                                                                                            <button
+                                                                                                class="btn btn-primary mt-2 ml-2 form-group"
+                                                                                                data-dismiss="modal"
+                                                                                                data-backdrop="false"
+                                                                                                type="submit"
+                                                                                                (click)="updateTask(task)">
+                                                                                                Actualizar Tarea
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <button name="EDITColorTask" type="button"
+                                                                class="btn btn-light text-{{task.color}} ml-2"
+                                                                data-toggle="modal"
+                                                                [attr.data-target]="'#EditColorTaskModal'+task.id">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24"
+                                                                    height="24" fill="currentColor"
+                                                                    class="bi bi-tag-fill" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                                                </svg>
+                                                            </button>
+
+
+                                                            <div class="modal fade"
+                                                                id="{{'EditColorTaskModal'+ task.id}}" tabindex="-1"
+                                                                aria-labelledby="EditColorTaskModalLabel"
+                                                                aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h2 class="modal-title"
+                                                                                id="EditColorTaskModalLabel">
+                                                                                Etiqueta {{task.name}} </h2>
+                                                                            <button name="EDITColorTask" type="button"
+                                                                                class="btn btn-light text-{{color}} ml-2">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                    width="24" height="24"
+                                                                                    fill="currentColor"
+                                                                                    class="bi bi-tag-fill"
+                                                                                    viewBox="0 0 16 16">
+                                                                                    <path
+                                                                                        d="M2 1a1 1 0 0 0-1 1v4.586a1 1 0 0 0 .293.707l7 7a1 1 0 0 0 1.414 0l4.586-4.586a1 1 0 0 0 0-1.414l-7-7A1 1 0 0 0 6.586 1H2zm4 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                                                                                </svg>
+                                                                            </button>
+
+
+                                                                            <button type="button" class="close"
+                                                                                data-dismiss="modal" aria-label="Close">
+                                                                                <span aria-hidden="true">&times;</span>
+                                                                            </button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div
+                                                                                class="d-flex flex-column bd-highlight mb-3 mt-2">
+                                                                                <div>
+                                                                                    <!--Formulario-->
+                                                                                    <form #createTaskForm="ngForm">
+                                                                                        <button type="button"
+                                                                                            class="btn btn-primary text-primary rounded-circle m-2"
+                                                                                            (click)="changeColor('primary')">__</button>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-secondary text-secondary rounded-circle m-2"
+                                                                                            (click)="changeColor('secondary')">__</button>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-success text-success rounded-circle m-2"
+                                                                                            (click)="changeColor('success')">__</button>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-danger text-danger rounded-circle m-2"
+                                                                                            (click)="changeColor('danger')">__</button>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-warning text-warning rounded-circle m-2"
+                                                                                            (click)="changeColor('warning')">__</button>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-info text-info rounded-circle m-2"
+                                                                                            (click)="changeColor('info')">__</button>
+                                                                                        <div
+                                                                                            class="d-flex justify-content-end">
+                                                                                            <input type="hidden"
+                                                                                                name="color"
+                                                                                                #subject="ngModel"
+                                                                                                [(ngModel)]="task.color"
+                                                                                                value="{{color}}">
+                                                                                            <button
+                                                                                                class="btn btn-secondary mt-2 mb-3 ml-2"
+                                                                                                data-dismiss="modal">Cerrar</button>
+
+                                                                                            <input
+                                                                                                class="btn btn-primary mt-2 ml-2 form-group"
+                                                                                                data-dismiss="modal"
+                                                                                                data-backdrop="false"
+                                                                                                value="Actualizar"
+                                                                                                type="submit" (click)="updateTask({
+                                                                                                'id':task.id, 
+                                                                                                'user_id':task.user_id ,
+                                                                                                'list_id':task.list_id ,
+                                                                                                'name':task.name ,
+                                                                                                'description':task.description ,
+                                                                                                'color':color ,
+                                                                                                'date':task.date 
+                                                                                            })">
+                                                                                        </div>
+                                                                                    </form>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="ml-2 mb-2">
+                                                        {{task.description}}
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div>
-                                        <small>Editar Lista</small>
-                                    </div>
                                 </div>
+                                <div class="d-flex justify-content-center">
+                                    <div class="bd-highligh m-2">
+                                        <button name="DELETEList" class="btn btn-light text-secondary mr-2"
+                                            data-toggle="modal" [attr.data-target]="'#DelListModal'+list.id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                                fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                                            </svg>
+                                        </button>
 
-                                <div class="bd-highligh m-2">
-
-                                    <button name="CREATETask" class="btn btn-light text-secondary mr-2"
-                                        data-toggle="modal" [attr.data-target]="'#CreateTaskOfList'+list.id"
-                                        (click)="onLoading()">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
-                                            fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
-                                            <path
-                                                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                                        </svg>
-
-                                    </button>
-
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="{{'CreateTaskOfList'+ list.id}}" tabindex="-1"
-                                        aria-labelledby="CreateTaskOfListLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h2 class="modal-title" id="CreateTaskOfListLabel">Nueva Tarea</h2>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close" (click)="ofLoading()">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                        <!-- Modal -->
+                                        <div class="modal" id="{{'DelListModal'+ list.id}}" tabindex="-1"
+                                            aria-labelledby="DelListModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h2 class="modal-title" id="DelListModalLabel">Eliminar
+                                                            Departamento
+                                                        </h2>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Estás a punto de eliminar permanentemente la lista:
+                                                        <b>{{list.name}} y todas sus tareas.</b>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                             data-dismiss="modal">
+                                                            No deseo eliminar
+                                                        </button>
+                                                        <form #deletelistForm="ngForm"
+                                                            (ngSubmit)="deleteList(deletelistForm)">
+                                                            <button class="btn btn-danger mt-3 form-group"
+                                                                data-dismiss="modal" data-backdrop="false" type="button"
+                                                                (click)="deleteList(list)">
+                                                                Eliminar
+                                                            </button>
+                                                        </form>
+                                                    </div>
                                                 </div>
-                                                <div class="modal-body">
+                                            </div>
+                                        </div>
 
-                                                    <div class="d-flex flex-column bd-highlight mb-3 mt-2">
-                                                        <div>
-                                                            <!--Formulario-->
-                                                            <form #createTaskForm="ngForm">
+                                        <div>
+                                            <small>Borrar Lista</small>
+                                        </div>
+                                    </div>
+                                    <div class="bd-highligh m-2">
 
-                                                                <div class="form-group">
-                                                                    <label for="name">Nombre</label>
-                                                                    <input type="text" name="nombre"
-                                                                        class="form-control" #subject="ngModel"
-                                                                        [(ngModel)]="task.name" required>
-                                                                    <small *ngIf="!subject.valid && subject.touched"
-                                                                        class="invalid-feedback d-block">
-                                                                        Es necesario poner un nombre valido
-                                                                    </small>
-                                                                </div>
+                                        <button name="EDITList" class="btn btn-light text-secondary mr-2"
+                                            data-toggle="modal" [attr.data-target]="'#EditListModal'+list.id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                                fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                                <path
+                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z" />
+                                            </svg>
+                                        </button>
 
-                                                                <div class="form-group">
-                                                                    <label for="description">Descripción
-                                                                        (opcional)</label>
-                                                                    <textarea rows="5" name="descripcion"
-                                                                        class="form-control" #subject="ngModel"
-                                                                        [(ngModel)]="task.description">
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="{{'EditListModal'+ list.id}}" tabindex="-1"
+                                            aria-labelledby="EditListModalListLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h2 class="modal-title" id="EditListModalLabel">Editar
+                                                            Departamento
+                                                        </h2>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Puedes actualizar los datos del departamento:
+                                                        <b>{{list.name}}</b>
+
+                                                        <div class="d-flex flex-column bd-highlight mb-3 mt-2">
+                                                            <div>
+                                                                <!--Formulario-->
+                                                                <form #updatelistForm="ngForm"
+                                                                    (ngSubmit)="updateList(updatelistForm)">
+
+                                                                    <div class="form-group">
+                                                                        <label for="name">Nombre</label>
+                                                                        <input type="text" name="nombre"
+                                                                            class="form-control" #subject="ngModel"
+                                                                            value="{{list.name}}"
+                                                                            [(ngModel)]="list.name" required>
+                                                                        <small *ngIf="!subject.valid && subject.touched"
+                                                                            class="invalid-feedback d-block">
+                                                                            Es necesario poner un nombre valido
+                                                                        </small>
+                                                                    </div>
+
+                                                                    <div class="d-flex justify-content-end">
+                                                                        <button class="btn btn-secondary mt-2 mb-3 ml-2"
+                                                                            data-dismiss="modal">Cerrar</button>
+
+                                                                        <button
+                                                                            class="btn btn-primary mt-2 ml-2 form-group"
+                                                                            data-dismiss="modal" data-backdrop="false"
+                                                                            type="submit" (click)="updateList(list)">
+                                                                            Actualizar
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <small>Editar Lista</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="bd-highligh m-2">
+
+                                        <button name="CREATETask" class="btn btn-light text-secondary mr-2"
+                                            data-toggle="modal" [attr.data-target]="'#CreateTaskOfList'+list.id">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
+                                                fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                                            </svg>
+
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="{{'CreateTaskOfList'+ list.id}}" tabindex="-1"
+                                            aria-labelledby="CreateTaskOfListLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h2 class="modal-title" id="CreateTaskOfListLabel">Nueva Tarea
+                                                        </h2>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+
+                                                        <div class="d-flex flex-column bd-highlight mb-3 mt-2">
+                                                            <div>
+                                                                <!--Formulario-->
+                                                                <form #createTaskForm="ngForm">
+
+                                                                    <div class="form-group">
+                                                                        <label for="name">Nombre</label>
+                                                                        <input type="text" name="nombre"
+                                                                            class="form-control" #subject="ngModel"
+                                                                            [(ngModel)]="task.name" required>
+                                                                        <small *ngIf="!subject.valid && subject.touched"
+                                                                            class="invalid-feedback d-block">
+                                                                            Es necesario poner un nombre valido
+                                                                        </small>
+                                                                    </div>
+
+                                                                    <div class="form-group">
+                                                                        <label for="description">Descripción
+                                                                            (opcional)</label>
+                                                                        <textarea rows="5" name="descripcion"
+                                                                            class="form-control" #subject="ngModel"
+                                                                            [(ngModel)]="task.description">
                                                                     </textarea>
-                                                                </div>
+                                                                    </div>
 
-                                                                <div class="d-flex justify-content-end">
-                                                                    <button class="btn btn-secondary mt-2 mb-3 ml-2"
-                                                                        data-dismiss="modal"
-                                                                        (click)="ofLoading()">Cerrar</button>
+                                                                    <div class="d-flex justify-content-end">
+                                                                        <button class="btn btn-secondary mt-2 mb-3 ml-2"
+                                                                            data-dismiss="modal">Cerrar</button>
 
-                                                                    <button class="btn btn-primary mt-2 ml-2 form-group"
-                                                                        data-dismiss="modal" data-backdrop="false"
-                                                                        type="submit" value="{{list.id}}"
-                                                                        (click)="getVal($event.target.value)" (click)="createTask({
+                                                                        <button
+                                                                            class="btn btn-primary mt-2 ml-2 form-group"
+                                                                            data-dismiss="modal" data-backdrop="false"
+                                                                            type="submit" value="{{list.id}}"
+                                                                            (click)="getVal($event.target.value)"
+                                                                            (click)="createTask({
                                                                             'id':task.id, 
                                                                             'user_id':task.user_id ,
                                                                             'list_id':task.list_id ,
@@ -240,30 +497,30 @@
                                                                             'color':task.color ,
                                                                             'date':task.date 
                                                                         })" (cdkDropListDropped)="drop($event)">
-                                                                        Crear Tarea
-                                                                    </button>
-                                                                </div>
-                                                            </form>
+                                                                            Crear Tarea
+                                                                        </button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div>
-                                        <small>Nueva Tarea</small>
+                                        <div>
+                                            <small>Nueva Tarea</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </mat-panel-description>
-                    <div *ngIf="loading==true">
-                        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
-                    </div>
-                </mat-expansion-panel>
-            </mat-accordion>
+                        </mat-panel-description>
+                        <div *ngIf="loading==true">
+                            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
         </div>
     </div>
-</div>
