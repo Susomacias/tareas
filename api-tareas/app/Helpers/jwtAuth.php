@@ -10,7 +10,7 @@ class JwtAuth {
     public $key;
     
     public function __construct() {
-        $this->key = 'esto_es_una_clave_super_secreta-99887766';
+        $this->key = 'mi clave secreta';
     }
     
     public function create($user, $decode = false) {
